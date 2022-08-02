@@ -7,6 +7,7 @@ const txtInput 			= document.querySelector('.new-todo')
 const btnBorrar 		= document.querySelector('.clear-completed')
 const ulFiltros			= document.querySelector('.filters')
 const anchorFiltros = document.querySelectorAll('.filtro')
+const contadorPend	= document.querySelector('.todo-count')
 
 export const crearTodoHtml = (todo) => {
     const htmlTodo = `
@@ -24,7 +25,6 @@ export const crearTodoHtml = (todo) => {
     divTodoList.append(div.firstElementChild)
     
     return div.firstElementChild
-
 }
 
 // Eventos
@@ -38,6 +38,7 @@ txtInput.addEventListener('keyup', (event) => {
 		txtInput.value = ''
 	}
 
+	todosPendientes()
 })
 
 divTodoList.addEventListener('click', (event) => {
@@ -52,6 +53,8 @@ divTodoList.addEventListener('click', (event) => {
 	todoList.eliminarTodo(todoId)
 	divTodoList.removeChild(todoElemento)
 	}
+
+	todosPendientes()
 })
 
 btnBorrar.addEventListener('click', () => {
@@ -62,6 +65,8 @@ btnBorrar.addEventListener('click', () => {
 			divTodoList.removeChild(elemento)
 		}
 	}
+
+	todosPendientes()
 })
 
 ulFiltros.addEventListener('click', (event) => {
@@ -89,4 +94,10 @@ ulFiltros.addEventListener('click', (event) => {
 		}
 	}
 
+	todosPendientes()
 })
+
+export const todosPendientes = () => {
+  const pendientes = todoList.pendientes()
+  contadorPend.innerHTML = `<strong>${pendientes}</strong> pendiente(s)`
+}
